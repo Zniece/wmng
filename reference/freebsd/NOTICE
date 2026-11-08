@@ -1,0 +1,22 @@
+# Reference sources, fetched 2026-11-06
+
+The C files in this directory are from FreeBSD (`freebsd/freebsd-src`,
+branch `main`) and are used as the *behavioural reference* for the D1 ACL
+work. They are not compiled or linked into wmng.
+
+Licence: BSD-2-Clause, with the original copyright notices intact in every
+file (Chris D. Faulhaber, Robert N. M. Watson, Edward Tomasz Napierła,
+TrustedBSD Project).
+
+The wmng source (`src/model.rs`, `src/ops.rs`, the applets and providers)
+is a fresh Rust implementation that follows the DESIGN decisions extracted
+into ../ACL-PORT-SPEC.md: the option-queue semantics, the merge/remove
+algorithms, and the NFSv4 text grammar come from these files; the Win32
+DACL handling is ours. Where a behaviour could only be decided by reading
+the reference, the spec cites the function that decided it.
+
+Retrieved from:
+  https://raw.githubusercontent.com/freebsd/freebsd-src/main/bin/setfacl/...
+  https://raw.githubusercontent.com/freebsd/freebsd-src/main/bin/getfacl/...
+  https://raw.githubusercontent.com/freebsd/freebsd-src/main/lib/libc/posix1e/...
+  https://raw.githubusercontent.com/freebsd/freebsd-src/main/sys/sys/acl.h

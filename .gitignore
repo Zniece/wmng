@@ -1,0 +1,5 @@
+/target
+
+# Hardlink shims built from target binaries (wmng --link-dir equivalent);
+# they share an inode with the build output and must not be tracked.
+/shim
