@@ -7,4 +7,5 @@
 
 pub mod model;
 pub mod ops;
+pub mod proc;
 pub mod time;

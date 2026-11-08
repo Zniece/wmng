@@ -5,7 +5,9 @@
 use windows_sys::Win32::Foundation::GetLastError;
 
 pub mod power;
+pub mod process;
 pub mod security;
+pub mod windows;
 
 // The applet-facing surface: names stay `providers::read_sd` etc., so the
 // applet layer does not care which provider module a call lives in.

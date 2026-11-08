@@ -497,3 +497,44 @@ pub fn write_dacl(path: &str, follow: bool, acl: &[u8]) -> Result<(), String> {
     }
     Ok(())
 }
+
+/// Owner of a process, as `DOMAIN\name`. Takes an already-open process
+/// handle (the caller keeps ownership of closing it).
+pub fn process_owner(process: HANDLE) -> Option<String> {
+    use windows_sys::Win32::Security::{GetTokenInformation, TokenUser, TOKEN_QUERY};
+    use windows_sys::Win32::System::Threading::OpenProcessToken;
+
+    let mut token: HANDLE = std::ptr::null_mut();
+    if unsafe { OpenProcessToken(process, TOKEN_QUERY, &mut token) } == 0 {
+        return None;
+    }
+    let out = (|| {
+        let mut needed = 0u32;
+        unsafe {
+            GetTokenInformation(token, TokenUser, std::ptr::null_mut(), 0, &mut needed)
+        };
+        if needed == 0 {
+            return None;
+        }
+        let mut buf = vec![0u8; needed as usize];
+        if unsafe {
+            GetTokenInformation(
+                token,
+                TokenUser,
+                buf.as_mut_ptr() as *mut core::ffi::c_void,
+                needed,
+                &mut needed,
+            )
+        } == 0
+        {
+            return None;
+        }
+        // TOKEN_USER { User: SID_AND_ATTRIBUTES { Sid: PSID, Attributes } }
+        // — the SID pointer is the first pointer-size field of the buffer.
+        let sid: PSID = unsafe { *(buf.as_ptr() as *const PSID) };
+        let sid = sid_to_string(sid)?;
+        Some(lookup_sid(&sid).0)
+    })();
+    unsafe { CloseHandle(token) };
+    out
+}

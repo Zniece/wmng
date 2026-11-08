@@ -3,8 +3,9 @@
 UNIX-style Windows management applets. PowerShell's replacement surface for
 system administration: UNIX command shape, Windows mechanisms, no emulation.
 
-**Status:** D1 (ACL) and power actions are implemented; processes and
-services are the next P0 blocks. Nothing here is stable.
+**Status:** D1 (ACL), power actions, and the D2 process set (ps/pgrep/
+pkill/kill) are implemented; services are the next P0 block. Nothing here
+is stable.
 
 ## Design contract
 
@@ -30,6 +31,7 @@ The one-line version:
 | `getfacl` | D1 ACL | `Get-Acl`, `icacls` (read) |
 | `setfacl` | D1 ACL | `Set-Acl`, `icacls` (write) |
 | `shutdown` / `reboot` / `poweroff` | power | `Stop-Computer`, `Restart-Computer`, `shutdown.exe` |
+| `ps` / `pgrep` / `pkill` / `kill` | D2 processes | `Get-Process`, `Stop-Process` (procstat pending) |
 
 Multi-call binary: the applet is the basename of argv[0] — hard-link
 `wmng.exe` to `getfacl.exe` etc. and put those on PATH. `wmng --list` shows

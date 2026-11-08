@@ -48,6 +48,10 @@ fn main() -> ExitCode {
     let code = match name {
         "getfacl" => applets::getfacl::run(rest),
         "setfacl" => applets::setfacl::run(rest),
+        "ps" => applets::proc::run_ps(rest),
+        "pgrep" => applets::proc::run_pgrep(rest),
+        "pkill" => applets::proc::run_pkill(rest),
+        "kill" => applets::proc::run_kill(rest),
         "shutdown" => applets::power::run_shutdown(rest),
         "reboot" => applets::power::run_reboot(rest),
         "poweroff" => applets::power::run_poweroff(rest),
@@ -65,6 +69,10 @@ fn print_help() {
     println!("applets:");
     println!("  getfacl   {}", applets::getfacl::USAGE);
     println!("  setfacl   {}", applets::setfacl::USAGE);
+    println!("  ps        {}", applets::proc::PS_USAGE);
+    println!("  pgrep     {}", applets::proc::PGREP_USAGE);
+    println!("  pkill     {}", applets::proc::PKILL_USAGE);
+    println!("  kill      {}", applets::proc::KILL_USAGE);
     println!("  shutdown  {}", applets::power::SHUTDOWN_USAGE);
     println!("  reboot    [-f]");
     println!("  poweroff  [-f]");

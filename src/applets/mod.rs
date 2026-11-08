@@ -3,7 +3,8 @@
 
 pub mod getfacl;
 pub mod power;
+pub mod proc;
 pub mod setfacl;
 
 /// Applet names in a stable order, for `wmng --list`.
-pub const APPLETS: &[&str] = &["getfacl", "poweroff", "reboot", "setfacl", "shutdown"];
+pub const APPLETS: &[&str] = &["getfacl", "kill", "pgrep", "pkill", "poweroff", "ps", "reboot", "setfacl", "shutdown"];
